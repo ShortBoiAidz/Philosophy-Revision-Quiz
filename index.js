@@ -16,7 +16,7 @@ const questions = [
 
 const answers = [
   "The thing or state of affairs that brings something about",
-  "Argue from specific to general",
+  "Arguing from something specific to something general",
   "That which is given to the question, \"What is it made of?\"",
   "The premises being true would guarantee that the conclusion is true; the conclusion cannot be true if the premises are false",
   "Valid and all premises are true",
