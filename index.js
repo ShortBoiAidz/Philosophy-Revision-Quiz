@@ -19,41 +19,103 @@ const DOM = {};
 
 let quizState = "general";
 
+// ================================
+
 cachedElements.forEach((id) => {
   DOM[id] = document.getElementById(id);
 });
 
 // ================================
 
-window.onload = function setStartingQuestion() {
-  (generalQuiz.randChoice(),
-    (DOM.questionLabel.textContent = `${generalQuiz.randQuestion}`));
-};
+DOM.causes.onclick = function runCauses() {
+  quizState = "causes";
+}
+
+DOM.general.onclick = function runCauses() {
+  quizState = "general";
+}
 
 // ================================
 
 DOM.next.onclick = function (event) {
   event.preventDefault();
+  DOM.output.style.display = "none";
 
   if (quizState == "general") {
-    generalQuiz.randChoice();
-    DOM.questionLabel.textContent = `${generalQuiz.randQuestion}`;
+    generalQuiz.runAnswers();
   } else if (quizState == "causes") {
-    causesQuiz.randChoice();
-    DOM.questionLabel.textContent = `${causesQuiz.randQuestion}`
+    causesQuiz.runAnswers();
   }
 };
 
 // ================================
 
+class RunTheme {
+  constructor(theme) {
+    this.questions = theme.questions
+    this.answers = theme.answers
+  }
+
+  randChoice() {
+    this.randNum = Math.floor(Math.random() * this.questions.length);
+    DOM.paragraph.style.display = "none";
+
+    this.randQuestion = this.questions[this.randNum];
+    this.submitClick();
+  }
+
+  submitClick() {
+    DOM.questionLabel.textContent = this.randQuestion
+    DOM.submit.onclick = (event) => {
+      event.preventDefault();
+      this.getInput();
+    };
+  }
+
+  getInput() {
+    let input = DOM.answerInput.value;
+    input = input.toLowerCase()
+    DOM.output.style.display = "block";
+
+    if (input == this.answers[this.randNum].toLowerCase()) {
+      DOM.output.textContent = "Correct!";
+    } else {
+      DOM.output.textContent = "Incorrect";
+      DOM.paragraph.style.display = "block";
+      DOM.answer.textContent = this.answers[this.randNum];
+      DOM.answerInput.value = "";
+    }
+
+    this.showStatus();
+  }
+
+  showStatus() {
+    if (DOM.output.textContent == "Correct!") {
+      DOM.output.style.color = "lime";
+    } else if (DOM.output.textContent == "Incorrect") {
+      DOM.output.style.color = "red";
+    }
+
+    if (DOM.output.textContent == "Correct!") {
+      this.randChoice();
+    }
+    DOM.answerInput.value = "";
+  }
+}
+
 class Causes {
   constructor() {
-    const questions = ["What is efficient cause?", "What is material cause?"];
+    this.questions = ["What is efficient cause?", "What is material cause?"];
 
-    const answers = [
+    this.answers = [
       "The thing or state of affairs that brings something about",
       'That which is given to the question, "What is it made of?"',
     ];
+  }
+
+  runAnswers() {
+    DOM.output.style.display = "none";
+    runCauses.randChoice();
   }
 }
 
@@ -88,46 +150,13 @@ class General {
     ];
   }
 
-  randChoice() {
-    this.randNum = Math.floor(Math.random() * this.questions.length);
-
-    DOM.paragraph.style.display = "none";
-
-    this.randQuestion = this.questions[this.randNum];
-    this.submitClick();
+  runAnswers() {
+    runGeneral.randChoice()
   }
 
-  submitClick() {
-    DOM.submit.onclick = function (event) {
-      event.preventDefault();
-
-      this._getInput();
-    };
-  }
-
-  _getInput() {
-    let input = DOM.answerInput.value;
-    input = input.toLocaleLowerCase();
-
-    if (input == this.answers[this.randNum].toLocaleLowerCase()) {
-      DOM.output.textContent = "Correct!";
-    }
-
-    this.showAnswer();
-  }
-
-  showAnswer() {
-    if (DOM.output.textContent == "Correct!") {
-      DOM.output.style.color = "lime";
-      this.randChoice();
-      DOM.answerInput.value = "";
-    } else {
-      DOM.paragraph.style.display = "block";
-      DOM.answer.textContent = this.answers[this.randNum];
-      DOM.answerInput.value = "";
-    }
-  }
 }
 
 generalQuiz = new General();
 causesQuiz = new Causes();
+runGeneral = new RunTheme(generalQuiz);
+runCauses = new RunTheme(causesQuiz)
