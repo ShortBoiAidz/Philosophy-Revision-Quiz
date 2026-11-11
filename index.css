@@ -65,3 +65,48 @@ header {
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
 }
+
+aside {
+  display: flex;
+  flex-direction: column;
+
+  height: 5rem;
+
+  position: absolute;
+  left: 50px;
+}
+
+nav {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+
+  height: 100%;
+
+  border-radius: 25px;
+
+  background-color: rgba(141, 0, 217, 0.75);
+
+  padding-top: 4em;
+  padding-bottom: 4em;
+  padding-right: 2em;
+  padding-left: 2em;
+
+  && > button {
+    width: 7em;
+    padding: 5px;
+    font-size: 1rem;
+    font-family: consolas;
+    border-radius: 25px;
+  }
+}
+
+@media (min-width: 700px) {
+  .content {
+    scale: 0.75;
+  }
+}

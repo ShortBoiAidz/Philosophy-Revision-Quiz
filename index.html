@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Philosophy Revision</title>
     <link rel="stylesheet" href="index.css" />
-    <link rel="icon" type="image/x-icon" href="./gsscLogo.png">
+    <link rel="icon" type="image/x-icon" href="./gsscLogo.png" />
   </head>
 
   <body>
@@ -13,20 +13,31 @@
       <h3>The answers must be specific; verbatim.</h3>
     </header>
 
-    <form id="form">
-      <h1>Philosophy Revision Quiz</h1>
+    <aside>
+      <nav>
+        <button type="button" id="general">General</button>
+        <button type="button" id="causes">Causes</button>
+        <button type="button" id="ethics">Ethics</button>
+        <button type="button" id="time">Time</button>
+      </nav>
+    </aside>
 
-      <hr />
+    <div class="content">
+      <form id="form">
+        <h1>Philosophy Revision Quiz</h1>
 
-      <label
-        ><h2><span id="questionLabel">Loading...</span></h2></label
-      >
-      <input type="text" id="answerInput" placeholder="Type your answer" />
-      <button type="submit" id="submit">Submit</button>
-      <button type="submit" id="next">Next question</button>
-      <h2><span id="output"></span></h2>
-      <p><b>Answer: </b><br /><span id="answer"></span></p>
-    </form>
+        <hr />
+
+        <label
+          ><h2><span id="questionLabel">Loading...</span></h2></label
+        >
+        <input type="text" id="answerInput" placeholder="Type your answer..." />
+        <button type="submit" id="submit">Submit</button>
+        <button type="submit" id="next">Next question</button>
+        <h2><span id="output"></span></h2>
+        <p id="paragraph"><b>Answer: </b><br /><span id="answer"></span></p>
+      </form>
+    </div>
 
     <script src="index.js"></script>
   </body>
