@@ -1,5 +1,3 @@
-// ================================
-
 const cachedElements = [
   "questionLabel",
   "answerInput",
@@ -16,44 +14,37 @@ const cachedElements = [
 ];
 
 const DOM = {};
-
 let quizState = "general";
-
-// ================================
 
 cachedElements.forEach((id) => {
   DOM[id] = document.getElementById(id);
 });
 
-// ================================
-
 DOM.causes.onclick = function runCauses() {
   quizState = "causes";
-}
+};
 
-DOM.general.onclick = function runCauses() {
+DOM.general.onclick = function runGeneral() {
   quizState = "general";
-}
-
-// ================================
+};
 
 DOM.next.onclick = function (event) {
   event.preventDefault();
   DOM.output.style.display = "none";
 
-  if (quizState == "general") {
+  if (quizState === "general") {
     generalQuiz.runAnswers();
-  } else if (quizState == "causes") {
+  } else if (quizState === "causes") {
     causesQuiz.runAnswers();
   }
 };
 
-// ================================
-
 class RunTheme {
   constructor(theme) {
-    this.questions = theme.questions
-    this.answers = theme.answers
+    this.questions = theme.questions;
+    this.answers = theme.answers;
+    this.randNum = 0;
+    this.randQuestion = "";
   }
 
   randChoice() {
@@ -65,7 +56,7 @@ class RunTheme {
   }
 
   submitClick() {
-    DOM.questionLabel.textContent = this.randQuestion
+    DOM.questionLabel.textContent = this.randQuestion;
     DOM.submit.onclick = (event) => {
       event.preventDefault();
       this.getInput();
@@ -73,11 +64,11 @@ class RunTheme {
   }
 
   getInput() {
-    let input = DOM.answerInput.value;
-    input = input.toLowerCase()
+    let input = DOM.answerInput.value.trim();
+    input = input.toLowerCase();
     DOM.output.style.display = "block";
 
-    if (input == this.answers[this.randNum].toLowerCase()) {
+    if (input === this.answers[this.randNum].toLowerCase()) {
       DOM.output.textContent = "Correct!";
     } else {
       DOM.output.textContent = "Incorrect";
@@ -90,13 +81,13 @@ class RunTheme {
   }
 
   showStatus() {
-    if (DOM.output.textContent == "Correct!") {
+    if (DOM.output.textContent === "Correct!") {
       DOM.output.style.color = "lime";
-    } else if (DOM.output.textContent == "Incorrect") {
+    } else if (DOM.output.textContent === "Incorrect") {
       DOM.output.style.color = "red";
     }
 
-    if (DOM.output.textContent == "Correct!") {
+    if (DOM.output.textContent === "Correct!") {
       this.randChoice();
     }
     DOM.answerInput.value = "";
@@ -151,12 +142,11 @@ class General {
   }
 
   runAnswers() {
-    runGeneral.randChoice()
+    runGeneral.randChoice();
   }
-
 }
 
-generalQuiz = new General();
-causesQuiz = new Causes();
-runGeneral = new RunTheme(generalQuiz);
-runCauses = new RunTheme(causesQuiz)
+const generalQuiz = new General();
+const causesQuiz = new Causes();
+const runGeneral = new RunTheme(generalQuiz);
+const runCauses = new RunTheme(causesQuiz);
