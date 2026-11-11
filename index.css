@@ -26,6 +26,7 @@ form {
   align-items: center;
   text-align: center;
   scale: 2;
+  max-width: 100dvh;
 
   && > input {
     margin-bottom: 10px;
