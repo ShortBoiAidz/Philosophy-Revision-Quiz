@@ -1,21 +1,31 @@
 // ================================
 
 const questions = [
-  "What does PICIT stand for?",
-  "What is a contention?",
-  "Name literary devices:",
-  "Name persuasive techniques:",
-  "What do you include in the publication?",
-  "Where do you find the intention?"
+  "What is efficient cause?",
+  "What is an inductive argument?",
+  "What is material cause?",
+  "Explain validity.",
+  "Explain soundness.",
+  "What is an analogy?",
+  "What are A-Theories of time?",
+  "What are B-Theories of time?",
+  "What is a premis?",
+  "What is generalisation?",
+  "What are existents?"
 ]
 
 const answers = [
-  "Publication, issue, contention, intention, target audience.",
-  "The author's view on the issue.",
-  "Alliteration, imagery, emotive language, non-linear, contrast, ambiguity, analogy, metaphor, onomatopoeia, anecdote, allusion, irony, juxtaposition, symbolism, tone, characterisation, repetition.",
-  "Appeal to family values, appeal to patriotism, reason & logic, irony and sarcasm, cliche, appeal to modernity, ad hominem., appeal to fear, puns, inclusive language, generalisation, repetition, appeal to justice, hyperbole, rhetorical question.",
-  "Author, date, publisher.",
-  "In the last few paragraphs."
+  "The thing or state of affairs that brings something about",
+  "Argue from specific to general",
+  "That which is given to the question, \"What is it made of?\"",
+  "The premises being true would guarantee that the conclusion is true; the conclusion cannot be true if the premises are false",
+  "Valid and all premises are true",
+  "Comparing properties of two things with common properties to infer they will share more properties",
+  "Time is a literal thing that flows",
+  "Time isn't literal and is purely a concept",
+  "A proposition offered to lead to a conclusion within an argument",
+  "Taking specific instances to form a broad concept that applies to a larger group",
+  "Something that is literally real"
 ]
 
 const questionLabel = document.getElementById("questionLabel");
@@ -24,6 +34,8 @@ const submit = document.getElementById("submit");
 const next = document.getElementById("next");
 const form = document.getElementById("form");
 const output = document.getElementById("output");
+const answer = document.getElementById("answer")
+const paragraph = document.querySelector("p")
 
 // ================================
 
@@ -39,57 +51,43 @@ next.onclick = function (event) {
 
 
 function randChoice() {
-  let randNum = Math.random();
+  let randNum = Math.floor(Math.random() * questions.length);
 
-  if (randNum <= 0.2) {
-    selectedQuestion = 1;
-  }
-  else if (randNum <= 0.4 && randNum > 0.2) {
-    selectedQuestion = 1;
-  }
-  else if (randNum <= 0.6 && randNum > 0.4) {
-    selectedQuestion = 2;
-  }
-  else if (randNum <= 0.8 && randNum > 0.6) {
-    selectedQuestion = 3;
-  }
-  else if (randNum <= 1 && randNum > 0.8) {
-    selectedQuestion = 4
-  }
-
-  randQuestion = questions[selectedQuestion];
-  submitClick(selectedQuestion)
+  randQuestion = questions[randNum];
+  submitClick(randNum)
 };
 
 
-function submitClick(selectedQuestion) {
+function submitClick(randNum) {
   submit.onclick = function (event) {
     event.preventDefault();
 
-    _getInput(selectedQuestion);
+    _getInput(randNum);
   };
 }
 
 
-function _getInput(selectedQuestion) {
+function _getInput(randNum) {
   let input = answerInput.value;
+  input = input.toLocaleLowerCase()
 
-  if (input == answers[selectedQuestion]) {
-    output.textContent = "Correct!"
-  }
-  else {
-    output.textContent = "Incorrect";
+  if (input == answers[randNum].toLocaleLowerCase()) {
+    output.textContent = "Correct!";
   }
 
-  changeColor();
+  showAnswer(randNum);
 }
 
 
-function changeColor() {
+function showAnswer(randNum) {
   if (output.textContent == "Correct!") {
-    output.style.color = "lime"
+    output.style.color = "lime";
+    randChoice()
+    answerInput.value = ""
   }
   else {
-    output.style.color = "red"
+    paragraph.style.display = "block";
+    answer.textContent = answers[randNum]
+    answerInput.value = "";
   }
 }

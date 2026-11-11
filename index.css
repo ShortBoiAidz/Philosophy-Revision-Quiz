@@ -5,8 +5,10 @@ body {
   min-width: 100dvw;
 
   overflow: hidden;
+  text-wrap: balance;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -14,7 +16,7 @@ body {
 }
 
 h1 {
-  font-size: 5em;
+  font-size: 3vw;
   margin: auto;
 }
 
@@ -26,7 +28,6 @@ form {
   scale: 2;
 
   && > input {
-    margin: auto;
     margin-bottom: 10px;
     font-family: consolas;
   }
@@ -37,8 +38,29 @@ form {
     font-family: consolas;
     margin-bottom: 10px;
   }
+
+  && > p {
+    color: white;
+    text-wrap: balance;
+    display: none;
+  }
 }
 
 hr {
   width: stretch;
+}
+
+header {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+
+  min-width: 100vw;
+
+  background-color: rgba(240, 255, 255, 0.205);
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
